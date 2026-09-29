@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Virtual Society Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --bg-color: #f0f3f8;
+            --card-bg: #ffffff;
+            --text-main: #2d3436;
+            --text-light: #636e72;
+            --correct-bg: #dff9fb;
+            --correct-border: #1dd1a1;
+            --wrong-bg: #ffefeb;
+            --wrong-border: #ff6b6b;
+        }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            padding-bottom: 50px;
+        }
+
+        /* Sticky Header for Score */
+        .header-score {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.2);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .score-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .header-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header-title h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        .header-title p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.5s forwards;
+        }
+
+        .question-card:hover {
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-item {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            font-size: 1.05rem;
+        }
+
+        .option-item:hover {
+            background: #f1f2f6;
+            border-color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        .opt-letter {
+            background: white;
+            color: var(--primary);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-right: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+
+        /* States after answering */
+        .option-item.correct-opt {
+            background: var(--correct-bg);
+            border-color: var(--correct-border);
+            color: #10ac84;
+            pointer-events: none;
+        }
+        .option-item.correct-opt .opt-letter {
+            background: var(--correct-border);
+            color: white;
+        }
+        
+        .option-item.wrong-opt {
+            background: var(--wrong-bg);
+            border-color: var(--wrong-border);
+            color: #ee5253;
+            pointer-events: none;
+        }
+        .option-item.wrong-opt .opt-letter {
+            background: var(--wrong-border);
+            color: white;
+        }
+
+        .option-item.disabled-opt {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .feedback-box {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            animation: fadeIn 0.4s;
+            line-height: 1.6;
+        }
+
+        .feedback-correct {
+            background: var(--correct-bg);
+            border-left: 5px solid var(--correct-border);
+            color: #0b8061;
+        }
+
+        .feedback-wrong {
+            background: var(--wrong-bg);
+            border-left: 5px solid var(--wrong-border);
+            color: #c83232;
+        }
+
+        .expl-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ปุ่มเริ่มทำใหม่ */
+        .btn-restart {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .btn-restart:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 600px) {
+            .question-card { padding: 20px; }
+            .header-score { font-size: 1rem; flex-direction: column; gap: 5px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-score">
+        <div>🚀 วิชาชุมชนเสมือนและสุนทรียศาสตร์ดิจิทัล</div>
+        <div class="score-badge">คะแนน: <span id="current-score">0</span> / 25</div>
+    </div>
+
+    <div class="quiz-container">
+        <div class="header-title">
+            <h1>แบบทดสอบ 25 ข้อ (ฉบับสมบูรณ์)</h1>
+            <p>เลือกคำตอบที่ถูกต้องที่สุด (ตอบแล้วเปลี่ยนใจไม่ได้นะ!)</p>
+        </div>
+        
+        <div id="quiz-content"></div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <button class="btn-restart" onclick="location.reload()">🔄 เริ่มทำแบบทดสอบใหม่</button>
+        </div>
+    </div>
+
+<script>
+    const quizData = [
+        {
+            q: "1. ข้อใดไม่ใช่ข้อมูลชีวมาตร (Biometric)?",
+            opts: ["1. ลายมือ", "2. ภาพถ่ายม่านตา", "3. ข้อมูลสุขภาพ", "4. ลายมือ", "5. ลายนิ้วมือ"],
+            ans: 2,
+            expl: "ข้อมูลสุขภาพเป็นข้อมูลส่วนบุคคลที่สำคัญ แต่ไม่ใช่เครื่องมือระบุตัวตนทางกายภาพแบบชีวมาตร (Biometric) เหมือนลายนิ้วมือหรือม่านตา"
+        },
+        {
+            q: "2. การยินยอมโดยรับรู้ (Informed Consent)ในเทคโนโลยี VR มีความสำคัญอย่างไร?",
+            opts: ["1. เพื่อเพิ่มความบันเทิงในการใช้งาน", "2. เพื่อให้ผู้ใช้เข้าใจถึงข้อกำหนดและประสบการณ์ที่เกิดจากการใช้งาน", "3. เพื่อให้ผู้ใช้สามารถแชร์ข้อมูลของตนกับผู้อื่น", "4. เพื่อให้ผู้ใช้สามารถเลือกใช้งานฟังก์ชั่นอย่างปราศจากข้อสงสัย", "5. เพื่อให้ผู้ใช้สามารถเล่นเกมได้อย่างอิสระ"],
+            ans: 1,
+            expl: "เพื่อให้ผู้ใช้งานได้รับรู้ความเสี่ยงและข้อกำหนดต่างๆ อย่างครบถ้วนก่อนการเริ่มใช้งาน"
+        },
+        {
+            q: "3. ข้อใดไม่เกี่ยวกับปัญหาอคดีในระบบ VR ?",
+            opts: ["1. การเข้าใช้ระบบที่ไม่เท่าเทียมกันเนื่องจากราคาของอุปกรณ์", "2. การสร้างแบบจำลองที่ไม่สนใจความหลากหลายของข้อมูลทางกายภาพ", "3. การออกแบบระบบที่เปิดโอกาสให้มีการได้เปรียบเสียเปรียบ และเกิดการล่วงละเมิดทางเพศ", "4. การแสดงภาพจำลองที่ไม่ตรงกับความเป็นจริงเพื่อสร้างประสบการณ์ผิดๆในการฝึกฝน", "5. การใช้ระบบ AI เพื่อช่วบลดความผิดพลาดในการสร้างวัตถุจำลอง"],
+            ans: 4,
+            expl: "การใช้ AI ช่วยลดความผิดพลาดถือเป็นการพัฒนาระบบ ไม่ใช่การสร้างอคติ (Bias) ในระบบ VR"
+        },
+        {
+            q: "4. การออกแบบสภาพแวดล้อม VR ควรคำนึงถึงอะไรเป็นอันดับแรก?",
+            opts: ["1. ทำให้อุปกรณ์เป็นเวอร์ชั่นล่าสุด", "2. การเพิ่มปริมาณผู้ใช้", "3. การป้องกันผู้ใช้จากการรู้สึกเครียดหรืออันตราย", "4. การเพิ่มความซับซ้อนของระบบ", "5. การทำให้ VR สามารถเข้าถึงได้ทุกคน"],
+            ans: 2,
+            expl: "ความปลอดภัย สวัสดิภาพ และสุขภาพจิตของผู้ใช้งานต้องมาเป็นอันดับแรกเสมอในการออกแบบโลกเสมือน"
+        },
+        {
+            q: "5. ผลเสียของเส้นแบ่งดิจิทัลเป็นปัญหาของการขาดทรัพยากรเท่านั้น ถ้าให้ทุกคนมีอุปกรณ์ใช้ทุกคน แล้ว ความเหลื่อมล้ำทางดิจิทัลก็จะหมดไป",
+            opts: ["True", "False"],
+            ans: 1,
+            expl: "ความเหลื่อมล้ำทางดิจิทัล (Digital Divide) ไม่ได้มีแค่มิติของ 'อุปกรณ์' แต่ยังรวมถึง 'ทักษะและความรู้' (Digital Literacy) ในการใช้งานด้วย"
+        },
+        {
+            q: "6. การปกปิดตัวตน (Anonymity)และความเป็นส่วนตัวมีความสัมพันธ์กัน ในแง่หนึ่งการปอกปิดตัวตนแสดงถึงสิทธิของผู้ใช้ที่จะเปิดเผยหรือปกปิดความเป็นส่วนตัวในการใช้ระบบก็ได้ แต่การอนุญาติให้มีการปกปิดตัวตนก็ทำให้ผู้ใช้ฉวยโอกาสไม่พูดความจริง หรือมีพฤติกรรมก่อกวน เพราะคิดว่าระบบจะไม่สามารถติดตาม หรือเชื่อมโยงมาถึงตนเองได้ แต่ในทางเดียวกัน การเพิ่มความปลอดภัยหรือความมั่นคงของข้อมูลก็ส่งผลกระทบกับความเป็นส่วนตัวโดยตรงด้วย เพราะว่าผู้ใช้จะต้องถูกระบุตัวตนจากข้อมูลส่วนบุคคล",
+            opts: ["True", "False"],
+            ans: 0,
+            expl: "ความปลอดภัย (Security) และความเป็นส่วนตัว (Privacy) เป็นสิ่งที่มักจะต้องยอมแลกกัน (Trade-off) ในระบบดิจิทัล"
+        },
+        {
+            q: "7. แม้ว่าระบบอินเตอร์เน็ทและสังคมออนไลน์จะมีการหลอกลวง การสร้างภาพตัวตนไม่แท้จริง แต่หากพิจารณาอย่างรอบด้านจะเห็นว่า การเชื่อมต่อผ่านสังคมออนไลน์ทำให้เกิดความเห็นอกเห็นใจกันและกันมากขึ้น จะเห็นได้จากกลุ่มขอความช่วยเหลือ การเรียกร้องความเป็นธรรมทางสังคมผ่านโซเขียล สิ่งเหล่านี้จะเกิดขึ้นไม่ได้ถ้าไม่มีระบบเชื่อมต่อถึงกันและแสดงความรู้สึกเห็นอกเห็นใจระหว่างกัน การหลอกลวงเป็นปัญหาที่ปะปนเข้ามาแต่ก็ไม่ใช่ทุกรณีที่เกิดขึ้นจะเป็นการหลอกลวง ในทางตรงกันข้ามถ้าหากไม่มีเครือข่ายสังคมออนไลน์ ก็อาจจะไม่มีช่องทางในการรับรู้ปัญหาและขอความช่วยเหลือ",
+            opts: ["True", "False"],
+            ans: 0,
+            expl: "เทคโนโลยีเป็นดาบสองคม แม้จะมีช่องโหว่ให้เกิดการหลอกลวง แต่ก็เป็นเครื่องมือสำคัญในการสร้างเครือข่ายช่วยเหลือทางสังคมได้จริง"
+        },
+        {
+            q: "8. ศิลปะดิจิทัลมีราคาไม่สูงเหมือนศิลปะแบบเดิมเพราะไฟล์ดิจิทัลทำสำเนาได้",
+            opts: ["True", "False"],
+            ans: 1,
+            expl: "ในยุคปัจจุบัน เทคโนโลยี Blockchain และ NFT ช่วยยืนยันกรรมสิทธิ์และสร้างความขาดแคลน ทำให้ศิลปะดิจิทัลมีมูลค่าสูงเทียบเท่าหรือมากกว่าศิลปะดั้งเดิม"
+        },
+        {
+            q: "9. Ethic of VR, Digital Ethic และ Information Ethics ไม่มีแง่มุมที่แตกต่างกัน ประเด็นทางจริยธรรมของทั้ง 3 หัวข้อนี้เหมือนกันทั้งหมด",
+            opts: ["True", "False"],
+            ans: 1,
+            expl: "แต่ละสาขามีประเด็นเฉพาะตัว เช่น VR เน้นผลกระทบต่อร่างกาย/จิตใจเชิงลึก ส่วน Information Ethics เน้นเรื่องสิทธิและข้อมูล"
+        },
+        {
+            q: "10. ข้อใดไม่ใช่ลักษณะสำคัญของศิลปะแบบ NFT",
+            opts: ["1. สร้างขึ้นบนเทคโนโลยี Blockchain", "2. ซื้อ-ขายด้วย Cryptocurrency", "3. เชื่อมโยงกับ Social Media และใช้เป็นภาพโปรไฟล์ได้", "4. แสดงผลได้หลายหน้าจอ ไม่จำกัดพื้นที่ทางกายภาพในการเข้าชม", "5. สามารถโอนย้ายกรรมสิทธิ์ผ่าน Smart Contract ได้"],
+            ans: 3,
+            expl: "การแสดงผลได้หลายหน้าจอเป็นคุณสมบัติทั่วไปของ 'ไฟล์ดิจิทัล' ไม่ใช่ลักษณะเฉพาะที่ต้องอาศัยเทคโนโลยี NFT"
+        },
+        {
+            q: "11. ข้อใดไม่ใช่ประโยชน์ของการเงินดิจิทัล",
+            opts: ["a. มีความน่าเชื่อถือเพราะการบันทึกด้วยคอมพิวเตอร์ผิดพลาดน้อยกว่าคน", "b. รวดเร็วกว่าการคำนวนด้วยคนและ รับ-ส่งข้อมูลได้รวดเร็ว", "c. ปลอดภัยมากกว่า เพราะว่าระบบคอมพิวเตอร์ทำให้ธุรกรรมปลอมแปลงได้ยาก", "d. เป็นมิตรกับสิ่งแวดล้อมมากกว่าเพราะว่าไม่ต้องใช้กระดาษเพื่อพิมพ์ธนบัตร", "e. ธุรกิจและการค้ามีความคล่องตัวเพราะว่าไม่ต้องทำธุรกรรมผ่านเคาน์เตอร์ธนาคาร"],
+            ans: 3,
+            expl: "การเงินดิจิทัล โดยเฉพาะระบบบล็อกเชน (เช่น เหมืองคริปโต) ใช้พลังงานไฟฟ้ามหาศาล จึงไม่ได้เป็นมิตรกับสิ่งแวดล้อมเสมอไป"
+        },
+        {
+            q: "12. ข้อความดังต่อไปนี้กล่าวถูกหรือผิด: การหมิ่นประมาทในเรื่องส่วนตัวผ่านช่องทาง Social Media เป็นความผิดทั้งตามกฎหมายอาญาและพ.ร.บ.การกระทำความผิดเกี่ยวกับคอมพิวเตอร์ในฐานนำเข้าข้อมูลอันเป็นเท็จ",
+            opts: ["True", "False"],
+            ans: 1,
+            expl: "ความผิดฐานหมิ่นประมาทถูกแยกความผิดออกจาก พ.ร.บ.คอมพิวเตอร์ (ไม่เข้าข่ายนำเข้าข้อมูลเท็จ) เพื่อป้องกันการฟ้องร้องที่ซ้ำซ้อนกัน"
+        },
+        {
+            q: "13. ข้อความดังต่อไปนี้กล่าวถูกหรือผิด: การใช้ Malware เพื่อสอดแนมข้อมูลในโปรแกรมต่าง ๆ เป็นการกระทำความผิดต่อระบบคอมพิวเตอร์",
+            opts: ["True", "False"],
+            ans: 0,
+            expl: "ถือเป็นอาชญากรรมทางคอมพิวเตอร์ที่ละเมิดความปลอดภัยของระบบ ข้อมูล และสิทธิส่วนบุคคลอย่างชัดเจน"
+        },
+        {
+            q: "14. ข้อความดังต่อไปนี้กล่าวถูกหรือผิด: ตาม ทฤษฎีการเปลี่ยนพื้นที่ บุคคลที่อัดอั้นเพราะถูกควบคุมพฤติกรรมอาชญากรรมในพื้นที่ทางกายภาพมักมีแนวโน้มที่จะหันไปกระทำความผิดในโลกไซเบอร์",
+            opts: ["True", "False"],
+            ans: 0,
+            expl: "ตามทฤษฎี Space Transition Theory เมื่อพื้นที่ในโลกความจริงถูกควบคุมอย่างเข้มงวด คนจะใช้โลกไซเบอร์เป็นพื้นที่ระบายออก"
+        },
+        {
+            q: "15. ข้อความดังต่อไปนี้กล่าวถูกหรือผิด: การ Upload ภาพลามกอนาจารที่เป็นภาพการ์ตูนลงบน Social Media ไม่มีความผิด เพราะไม่มีบุคคลที่ได้รับความเสียหาย",
+            opts: ["True", "False"],
+            ans: 1,
+            expl: "ภาพลามกอนาจาร (โดยเฉพาะที่เกี่ยวกับเด็ก เช่น โลลิคอน) แม้จะเป็นเพียงภาพวาดการ์ตูนก็ถือเป็นความผิดทางกฎหมายและขัดต่อศีลธรรม"
+        },
+        {
+            q: "16. ข้อใดต่อไปนี้ไม่ใช่สกุลเงินดิจิทัล",
+            opts: ["a. Stablecoin", "b. Bitcoin", "c. CBDC (Central Bank Digital Currency)", "d. อินทนนท์ (Project Inthanon)", "e. Blockchain"],
+            ans: 4,
+            expl: "Blockchain เป็นโครงสร้างพื้นฐานหรือเทคโนโลยี (Infrastructure) ที่ใช้สำหรับบันทึกข้อมูล ไม่ใช่ตัวสกุลเงิน"
+        },
+        {
+            q: "17. ราคาที่ไม่แน่นอนของ Cryptocurrency แสดงว่ามันไม่มีอยู่จริง",
+            opts: ["True", "False"],
+            ans: 1,
+            expl: "ความผันผวนเป็นเพียงผลลัพธ์ของกลไกอุปสงค์และอุปทาน (Demand/Supply) ในตลาดเสรี ไม่ได้หมายความว่าสิ่งนั้นไม่มีอยู่จริง"
+        },
+        {
+            q: "18. ข้อใดเป็นจริงเกี่ยวกับสกุลเงินดิจิทัล",
+            opts: ["a. มูลค่าของ Cryptocurrency ทุกเหรียญราคาเท่ากัน", "b. CBDC และ Stablecoin มีลักษณะเหมือนกันคือ ราคาเชื่อมโยงกับสกลุเงินจริง(เงินFiat)", "c. มูลค่าของ Cryptocurrency ไม่มีทางลดลง มีแต่จะเพิ่มขึ้นในอนาคต", "d. Cryptocurrency ไม่มีต้นทุนในการผลิต", "e. ทรัพย์สินดิจิทัลมีความหมายเดียวกันกับสกุลเงิน"],
+            ans: 1,
+            expl: "ทั้ง CBDC (ของรัฐ) และ Stablecoin (ของเอกชน) ต่างก็มีเป้าหมายในการรักษาความเสถียรของราคาโดยอิงกับเงิน Fiat"
+        },
+        {
+            q: "19. ข้อความดังต่อไปนี้กล่าวถูกหรือผิด: พระราชบัญญัติว่าด้วยการกระทำผิดเกี่ยวกับคอมพิวเตอร์นำมาปรับใช้กับคอมพิวเตอร์เท่านั้น ไม่ใช้กับอุปกรณ์อิเล็กทรอนิกส์อื่น ๆ",
+            opts: ["True", "False"],
+            ans: 1,
+            expl: "ตามกฎหมาย คำว่า 'คอมพิวเตอร์' ครอบคลุมถึงอุปกรณ์อิเล็กทรอนิกส์ใดๆ ที่มีระบบการประมวลผลข้อมูล เช่น สมาร์ทโฟน หรือ แท็บเล็ต"
+        },
+        {
+            q: "20. ศิลปะดิจิทัลส่งผลอย่างไรต่อวงการศิลปะ?",
+            opts: ["1. สร้างงานได้เฉพาะบนผ้าใบเท่านั้น", "2. ไม่ถูกจำกัดรูปแบบและสามารถเข้าถึงผู้ชมได้ทั่วโลก", "3. ไม่ส่งผลใด ๆ", "4. ทำให้ต้องใช้วัสดุธรรมชาติเท่านั้น", "5. จำกัดความคิดสร้างสรรค์ของศิลปิน"],
+            ans: 1,
+            expl: "ศิลปะดิจิทัลทำลายข้อจำกัดเดิมๆ ทำให้สามารถนำเสนอผลงานผ่านสื่อดิจิทัลและเข้าถึงคนทั่วโลกได้ทันทีผ่านเครือข่ายอินเทอร์เน็ต"
+        },
+        {
+            q: "21. ผลงานที่ศิลปินใช้ AI ช่วยสร้างนับว่าเป็นงานศิลปะได้",
+            opts: ["True", "False"],
+            ans: 0,
+            expl: "ในมุมมองสุนทรียศาสตร์ดิจิทัล AI ถูกมองว่าเป็น 'เครื่องมือ' ซึ่งศิลปินยังคงเป็นผู้ป้อนคำสั่งและกำหนดแนวคิด (Concept) หลัก"
+        },
+        {
+            q: "22. ข้อใดไม่ใช่ปัจจัยที่เป็นปัญหาในประเด็นมิตรภาพออนไลน์",
+            opts: ["1. ความห่างไกล", "2. ได้รู้จักตัวตนที่แท้จริง", "3. อารมณ์ขัน", "4. ไม่มีกิจกรรมร่วมกัน", "5. ขาดความต่อเนื่องในการพบเจอกัน"],
+            ans: 2,
+            expl: "อารมณ์ขัน เป็นทักษะเชิงบวกที่ช่วยสานสัมพันธ์ ไม่ใช่อุปสรรคหรือปัญหาในการสร้างมิตรภาพ"
+        },
+        {
+            q: "23. ข้อใดเป็นจริงสำหรับมิตรภาพในแบบอาริสโตเติล",
+            opts: ["1. มิตรภาพกับความรักเป็นสิ่งเดียวกัน", "2. มิตรภาพทำให้เกิดความยึดมั่นถือมั่น", "3. มิตรภาพเปลี่ยนแปลงไม่ได้", "4. มิตรภาพที่ดีจะต้องส่งเสริมปัญญาซึ่งกันและกัน", "5. คุณภาพของมิตรภาพไม่เกี่ยวข้องกับปัญญา"],
+            ans: 3,
+            expl: "ตามหลักอริสโตเติล มิตรภาพระดับสูงสุดคือมิตรภาพเพื่อความดีงาม (Friendship of Virtue) ซึ่งต้องอาศัยและส่งเสริมปัญญา"
+        },
+        {
+            q: "24. \"A เป็นเพื่อนสนิทกับ J เพราะชอบฟังเพลงแบบเดียวกันและชวนกันไปดูคอนเสิร์ตบ่อยๆทำให้สนิทกันมากขึ้น แม้ว่าจะเรียนคนละสาขาแต่สิ่งที่ทำให้พวกเขาสนิทกันก็เพราะว่าพวกเขาชอบฟังดนตรีแบบเดียวกัน” ตัวอย่างที่ยกมานี้เป็นมิตรภาพแบบใด",
+            opts: ["1. มิตรภาพแบบอรรถประโยชน์", "2. มิตรภาพแบบความพึงพอใจ(Pleasure)", "3. มิตรภาพเพื่อความสุข", "4. มิตรภาพทางปัญญา", "5. ไม่ใช่มิตรภาพ"],
+            ans: 1,
+            expl: "เป็นมิตรภาพที่ก่อตัวจากความชอบส่วนตัว หรือความสนุกสนานที่ได้รับจากการทำกิจกรรมร่วมกัน"
+        },
+        {
+            q: "25. ข้อใดเป็นเท็จสำหรับมิตรภาพในแบบอาริสโตเติล",
+            opts: ["1. คุณภาพของมิตรภาพขึ้นอยู่กับคุณธรรมและความดี โจรที่สนิทกันไม่นำไปสู่มิตรภาพที่ดี", "2. มิตรภาพที่แบบอรรถประโยชน์เป็นมิตรภาพที่ดีที่สุดเพราะช่วยกันพัฒนาผลประโยชน์", "3. มิตรภาพจะเกิดขึ้นได้ต้องใช้เวลาทำกิจกรรมร่วมกัน", "4. มิตรภาพแบบอรรถประโยชน์จะคงอยู่เฉพาะตอนที่มีประโยชน์ร่วมกันเท่านั้น", "5. มิตรภาพจะต้องมีจุดร่วมกันคนที่ยึดถือคุณค่าต่างกันเป็นมิตรที่สนิทสนมกันไม่ได้"],
+            ans: 1,
+            expl: "มิตรภาพแบบอรรถประโยชน์ (Utility) คบเพื่อผลประโยชน์ เมื่อหมดประโยชน์ก็เลิกคบ จึงไม่ใช่มิตรภาพที่ดีที่สุด มิตรภาพที่ดีที่สุดคือมิตรภาพแห่งคุณธรรม (Virtue)"
+        }
+    ];
+
+    const quizContent = document.getElementById("quiz-content");
+    let score = 0;
+    const answered = new Array(quizData.length).fill(false);
+    // ชุดตัวอักษรสำหรับหน้าตัวเลือก A, B, C, D, E
+    const letters = ['A', 'B', 'C', 'D', 'E'];
+
+    quizData.forEach((item, qIndex) => {
+        const card = document.createElement("div");
+        card.className = "question-card";
+        card.style.animationDelay = `${qIndex * 0.1}s`;
+        
+        const qTitle = document.createElement("div");
+        qTitle.className = "question-text";
+        qTitle.innerText = item.q;
+        card.appendChild(qTitle);
+        
+        const optGrid = document.createElement("div");
+        optGrid.className = "options-grid";
+        
+        const feedbackBox = document.createElement("div");
+        feedbackBox.id = `feedback-${qIndex}`;
+        feedbackBox.className = "feedback-box";
+        
+        item.opts.forEach((opt, optIndex) => {
+            const optDiv = document.createElement("div");
+            optDiv.className = `option-item opt-group-${qIndex}`;
+            optDiv.dataset.index = optIndex;
+            
+            const optLetter = document.createElement("div");
+            optLetter.className = "opt-letter";
+            optLetter.innerText = letters[optIndex]; // แปะป้าย A B C D E
+            
+            const optText = document.createElement("span");
+            optText.innerText = opt;
+            
+            optDiv.appendChild(optLetter);
+            optDiv.appendChild(optText);
+            
+            // เมื่อมีการคลิกเลือก
+            optDiv.addEventListener("click", function() {
+                if(answered[qIndex]) return; 
+                answered[qIndex] = true;
+                
+                const selectedIdx = parseInt(this.dataset.index);
+                const isCorrect = (selectedIdx === item.ans);
+                
+                const allOpts = card.querySelectorAll(`.opt-group-${qIndex}`);
+                allOpts.forEach(el => {
+                    const idx = parseInt(el.dataset.index);
+                    if(idx === item.ans) {
+                        el.classList.add("correct-opt");
+                    } else if (idx === selectedIdx && !isCorrect) {
+                        el.classList.add("wrong-opt"); 
+                    } else {
+                        el.classList.add("disabled-opt"); 
+                    }
+                });
+                
+                feedbackBox.style.display = "block";
+                if(isCorrect) {
+                    score++;
+                    document.getElementById("current-score").innerText = score;
+                    feedbackBox.className = "feedback-box feedback-correct";
+                    feedbackBox.innerHTML = `<div class="expl-title">🎉 ยอดเยี่ยม! ถูกต้องครับ</div>${item.expl}`;
+                } else {
+                    feedbackBox.className = "feedback-box feedback-wrong";
+                    feedbackBox.innerHTML = `<div class="expl-title">❌ ผิดครับ (คำตอบที่ถูกคือข้อ ${letters[item.ans]})</div>${item.expl}`;
+                }
+            });
+            
+            optGrid.appendChild(optDiv);
+        });
+        
+        card.appendChild(optGrid);
+        card.appendChild(feedbackBox);
+        quizContent.appendChild(card);
+    });
+</script>
+
+</body>
+</html>
