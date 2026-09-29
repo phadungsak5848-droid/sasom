@@ -3,500 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>แบบทดสอบ Mindset & Life</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>My Portfolio Hub</title>
+    <!-- นำเข้า Bootstrap และ Icon -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
-        body {
-            font-family: 'Sarabun', sans-serif;
-            background-color: #f3f4f6;
-            -webkit-tap-highlight-color: transparent;
+        /* ตกแต่งความสวยงามเพิ่มเติม */
+        body { 
+            background-color: #121212; 
+            color: #ffffff; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
-        /* */
-        /* Custom Scrollbar for Tabs */
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* Tab Buttons */
-        .tab-btn { transition: all 0.3s ease; }
-        .tab-btn.active {
-            background-color: #1e3a8a; /* blue-900 */
-            color: white;
-            border-color: #1e3a8a;
+        .profile-card { 
+            background-color: #1e1e1e; 
+            border-radius: 20px; 
+            border: 1px solid #333; 
         }
-
-        /* Option Labels */
-        .option-label { transition: all 0.2s ease; cursor: pointer; }
-        .option-label:hover:not(.locked) { background-color: #f8fafc; border-color: #93c5fd; }
-        
-        /* Checked State (Before Submit) */
-        input[type="radio"]:checked + .option-label:not(.locked) {
-            background-color: #eff6ff;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 1px #3b82f6;
+        .link-btn { 
+            border-radius: 12px; 
+            transition: all 0.3s ease; 
+            border-width: 2px;
         }
-
-        /* Correct Answer Style */
-        .opt-correct {
-            background-color: #d1fae5 !important;
-            border-color: #10b981 !important;
-            color: #064e3b !important;
-            box-shadow: inset 0 0 0 1px #10b981 !important;
+        .link-btn:hover { 
+            transform: translateY(-4px); 
+            box-shadow: 0 5px 15px rgba(0, 255, 200, 0.2); 
         }
-
-        /* Wrong Answer Style */
-        .opt-wrong {
-            background-color: #fee2e2 !important;
-            border-color: #ef4444 !important;
-            color: #7f1d1d !important;
-            box-shadow: inset 0 0 0 1px #ef4444 !important;
-        }
-
-        /* Missed/Correct Reveal Style */
-        .opt-reveal {
-            background-color: #f0fdf4 !important;
-            border: 2px dashed #10b981 !important;
-            color: #064e3b !important;
-        }
-
-        .locked { pointer-events: none; opacity: 0.9; }
-        /* input[type="radio"] { display: none; } */
     </style>
 </head>
-<body class="text-gray-800 pb-20">
-
-    <!-- Scroll to Top Button -->
-    <button id="scrollToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-6 right-6 bg-blue-700 hover:bg-blue-800 text-white rounded-full p-4 shadow-2xl transition-all duration-300 transform scale-0 z-50 focus:outline-none">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
-    </button>
-
-    <!-- Header -->
-    <header class="bg-blue-800 text-white py-6 shadow-md">
-        <div class="max-w-5xl mx-auto px-4">
-            <h1 class="text-2xl md:text-3xl font-bold">แบบทดสอบประเมินตนเอง (48 ข้อ)</h1>
-            <p class="text-blue-200 mt-1">บทเรียน Mindset, การปล่อยวาง และ Positive Thinking</p>
-        </div>
-    </header>
-
-    <!-- Global Score Dashboard -->
-    <div class="max-w-5xl mx-auto px-4 mt-6">
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 md:p-6 mb-8">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-6">
-                <div>
-                    <h2 class="text-xl font-bold text-gray-800 flex items-center">
-                        <svg class="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                        สรุปคะแนนรวมทั้งหมด
-                    </h2>
-                    <p class="text-gray-500 text-sm">อัปเดตอัตโนมัติเมื่อส่งคำตอบในแต่ละหมวด</p>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                
+                <!-- ส่วนหัวโปรไฟล์ -->
+                <div class="profile-card p-4 text-center mb-5 shadow-lg">
+                    <!-- รูปโปรไฟล์แบบสุ่มตัวอักษร สามารถเปลี่ยนลิงก์รูปตัวเองได้ภายหลัง -->
+                    <img src="https://ui-avatars.com/api/?name=My+Space&background=0D8ABC&color=fff&size=120" class="rounded-circle mb-3 border border-3 border-info" alt="Profile">
+                    <h2 class="fw-bold mb-2">ยินดีต้อนรับสู่พื้นที่ของผม</h2>
+                    <p class="text-info mb-2"><i class="bi bi-cpu"></i> Engineering Student @ SUT</p>
+                    <p class="text-secondary small mb-0">Electronics | Automation | Programming</p>
                 </div>
-                <div class="mt-4 md:mt-0 text-center md:text-right">
-                    <div class="text-3xl md:text-4xl font-black text-blue-700 tracking-tight" id="global-score-text">0 / 48</div>
-                    <div class="text-sm font-semibold text-gray-500 uppercase tracking-wide">คะแนนรวม</div>
+
+                <!-- ส่วนปุ่มเชื่อมโยง (Link Nodes) -->
+                <h6 class="text-center text-uppercase text-secondary mb-3 fw-bold pb-2 border-bottom border-secondary">
+                    <i class="bi bi-folder2-open"></i> แหล่งรวบรวมผลงาน
+                </h6>
+                
+                <div class="d-grid gap-3">
+                    
+                    <!-- โหนดที่ 1: ไปไฟล์โค้ด -->
+                    <a href="gemini-code-1790593387726.html" class="btn btn-outline-info btn-lg link-btn d-flex align-items-center justify-content-between px-4 py-3">
+                        <span><i class="bi bi-code-slash me-2 text-info"></i> สคริปต์ & โค้ดโปรเจกต์</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                    
+                    <!-- โหนดที่ 2: ไปไฟล์บทความ -->
+                    <a href="mindset_life.html" class="btn btn-outline-light btn-lg link-btn d-flex align-items-center justify-content-between px-4 py-3">
+                        <span><i class="bi bi-journal-text me-2"></i> บันทึกบทความ (Mindset Life)</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+
+                    <!-- โหนดที่ 3: ปุ่มเตรียมไว้สำหรับอนาคต (ยังกดไม่ได้) -->
+                    <a href="#" class="btn btn-outline-success btn-lg link-btn d-flex align-items-center justify-content-between px-4 py-3">
+                        <span><i class="bi bi-lightning-charge me-2 text-success"></i> Lab Report & Circuit Design</span>
+                        <i class="bi bi-lock text-secondary"></i>
+                    </a>
+
                 </div>
-            </div>
+                
+                <!-- ส่วนท้าย -->
+                <div class="text-center mt-5 text-secondary small">
+                    <p>© 2026 Powered by GitHub Pages</p>
+                </div>
 
-            <!-- Breakdown Grid -->
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-6" id="dashboard-breakdown">
-                <!-- Breakdown cards injected by JS -->
             </div>
-
-            <div class="border-t pt-4 text-center md:text-right">
-                <button onclick="resetAllQuizzes()" class="bg-red-50 hover:bg-red-100 text-red-600 font-bold py-2.5 px-6 rounded-lg border border-red-200 transition-colors shadow-sm text-sm md:text-base">
-                    🔄 เริ่มใหม่ทั้งหมด (Reset All)
-                </button>
-            </div>
-        </div>
-
-        <!-- Tabs -->
-        <div class="relative mb-6 border-b border-gray-300">
-            <div id="tabs-container" class="flex space-x-2 overflow-x-auto hide-scrollbar pb-[-1px]">
-                <!-- Tabs injected by JS -->
-            </div>
-        </div>
-
-        <!-- Content Area -->
-        <div id="quiz-container">
-            <!-- Sections injected by JS -->
         </div>
     </div>
-
-    <script>
-        const quizData = [
-            {
-                id: "cat_mindset",
-                title: "1. Growth & Fixed Mindset",
-                questions: [
-                    { q: "คำชมแบบใดช่วยเสริมสร้าง Growth Mindset?", options: ["\"หัวดีมาก!\"", "\"ชื่นชมความพยายามในการแบ่งเวลาอ่านหนังสือของเธอ\"", "\"เธอฉลาดจังเลย!\"", "\"เธอมีพรสวรรค์มาแต่เกิด\""], answer: "\"ชื่นชมความพยายามในการแบ่งเวลาอ่านหนังสือของเธอ\"", explanation: "การชมที่ความพยายาม (Process Praise) ทำให้ผู้เรียนโฟกัสที่วิธีการและกลยุทธ์ ช่วยให้กล้าเผชิญความท้าทาย ต่างจากการชมที่ตัวบุคคล (Trait Praise) ที่มักนำไปสู่ Fixed Mindset" },
-                    { q: "\"Mindset\" หมายถึงข้อใด?", options: ["ระดับสติปัญญาที่วัดออกมาเป็นค่า IQ", "พรสวรรค์ที่ติดตัวมาแต่กำเนิด", "กรอบความคิดหรือ \"เลนส์\" ที่ใช้มองโลกและตนเอง", "อารมณ์ความรู้สึกที่เกิดขึ้นชั่วคราว"], answer: "กรอบความคิดหรือ \"เลนส์\" ที่ใช้มองโลกและตนเอง", explanation: "Mindset คือกรอบความคิด หรือเลนส์ที่เราใช้มองและตีความโลก ซึ่งเป็นตัวกำหนดพฤติกรรมและการตอบสนองต่อเหตุการณ์ต่าง ๆ" },
-                    { q: "กระบวนการที่สมองปรับเปลี่ยนโครงสร้างและสร้างการเชื่อมต่อใหม่ได้ตลอดชีวิต เรียกว่าอะไร?", options: ["Dopamine Reaction", "Identity Trap", "Myelination", "Neuroplasticity"], answer: "Neuroplasticity", explanation: "Neuroplasticity หรือความยืดหยุ่นของสมอง คือความสามารถของเซลล์ประสาทในการสร้างจุดเชื่อมต่อ (Synapses) ใหม่ได้ตลอดชีวิตเมื่อเราเรียนรู้สิ่งใหม่" },
-                    { q: "การเติมคำว่า \"ยัง\" (YET) ลงในประโยค \"ฉันทำไม่ได้\" มีผลอย่างไร?", options: ["ทำให้รู้สึกท้อแท้มากขึ้น", "เปลี่ยนประโยคปลายปิดให้เป็นกระบวนการเรียนรู้ที่เปิดกว้าง", "ไม่มีผลต่อความคิดใดๆ", "ทำให้ยอมแพ้ได้เร็วขึ้น"], answer: "เปลี่ยนประโยคปลายปิดให้เป็นกระบวนการเรียนรู้ที่เปิดกว้าง", explanation: "คำว่า 'ยัง' (YET) เปลี่ยนมุมมองจากความล้มเหลวถาวร เป็นกระบวนการเรียนรู้ที่กำลังพัฒนาแต่ต้องใช้เวลา" },
-                    { q: "จากงานวิจัยของ Dr. Angela Duckworth \"Grit\" ประกอบด้วยอะไร?", options: ["พรสวรรค์ที่ติดตัวมาแต่กำเนิด", "ความหลงใหลและความเพียรพยายามในเป้าหมายระยะยาว", "ความสามารถในการเอาชนะคู่แข่ง", "ระดับ IQ ที่สูงกว่าค่าเฉลี่ย"], answer: "ความหลงใหลและความเพียรพยายามในเป้าหมายระยะยาว", explanation: "Grit (ความทรหดอดทน) ประกอบด้วยความหลงใหล (Passion) และความเพียรพยายาม (Perseverance) ในการทำเป้าหมายระยะยาวให้สำเร็จ" },
-                    { q: "สัญญาณคลื่นสมอง Pe (Post-Error Positivity) บ่งบอกถึงอะไร?", options: ["สมอง shutdown เมื่อทำผิด", "สมองตื่นตัว ประมวลผลและเรียนรู้จากข้อผิดพลาด", "สมองหลีกเลี่ยงการมองข้อผิดพลาด", "สมองหยุดพัฒนาอย่างถาวร"], answer: "สมองตื่นตัว ประมวลผลและเรียนรู้จากข้อผิดพลาด", explanation: "สัญญาณ Pe บ่งชี้ว่าสมองกำลังตื่นตัวและประมวลผลวิเคราะห์ข้อมูลเพื่อเรียนรู้จากข้อผิดพลาดที่เกิดขึ้น" },
-                    { q: "เมื่อคนที่มี Fixed Mindset ทำข้อสอบผิด สมองมักแสดงอาการใด?", options: ["สร้าง Synapses ใหม่ทันที", "เกิด ERN แล้ว shutdown หลีกเลี่ยงการมองข้อผิดพลาดเพื่อปกป้องอีโก้", "สัญญาณ Pe พุ่งสูงขึ้น", "หลั่งโดปามีนเพิ่มขึ้นอย่างมาก"], answer: "เกิด ERN แล้ว shutdown หลีกเลี่ยงการมองข้อผิดพลาดเพื่อปกป้องอีโก้", explanation: "เมื่อทำผิด คนที่มี Fixed Mindset มักจะเกิด ERN แล้วปิดกั้นสมอง (shutdown) เพื่อหลีกเลี่ยงการเผชิญหน้ากับข้อผิดพลาดปกป้องอีโก้ตนเอง" },
-                    { q: "ตามแนวคิด \"Antifragile\" คนที่มีความยืดหยุ่นทางอารมณ์ (Resilience) จะเป็นอย่างไรเมื่อเจอความกดดัน?", options: ["โทษปัจจัยภายนอกทั้งหมด", "หยุดพัฒนาและถอยหลัง", "เด้งกลับและเติบโตแข็งแกร่งกว่าเดิม", "แตกหักทันทีเมื่อโดนแรงกระแทก"], answer: "เด้งกลับและเติบโตแข็งแกร่งกว่าเดิม", explanation: "Antifragile คือความสามารถที่ยิ่งเจอกับความกดดันหรือความล้มเหลว ก็ยิ่งเด้งกลับและเติบโตได้แข็งแกร่งกว่าเดิม" },
-                    { q: "เมื่อได้รับ \"คำวิจารณ์\" (Criticism) คนที่มี Fixed Mindset มักจะทำอย่างไร?", options: ["มองเป็นการโจมตีและปฏิเสธคำวิจารณ์", "มองเป็นโอกาสในการเติบโต", "ขอบคุณและนำไปพัฒนาตนเอง", "นำมาสกัดเป็นบทเรียนเพื่อปรับปรุง"], answer: "มองเป็นการโจมตีและปฏิเสธคำวิจารณ์", explanation: "คนกลุ่มนี้มักผูกคุณค่าตัวเองไว้กับผลลัพธ์ จึงมองคำวิจารณ์ว่าเป็นการโจมตีคุณค่าของตนเองและมักจะปฏิเสธ" },
-                    { q: "คนที่มองว่า \"ความพยายามเป็นเครื่องหมายของคนไร้พรสวรรค์\" สะท้อน Mindset แบบใด?", options: ["Incremental Mindset", "Fixed Mindset", "Antifragile Mindset", "Growth Mindset"], answer: "Fixed Mindset", explanation: "นี่คือลักษณะของ Fixed Mindset ที่เชื่อว่าความเก่งมาจากพรสวรรค์แต่เกิด คนที่ต้องพยายามแปลว่าไม่เก่ง" },
-                    { q: "เป้าหมายหลักของคนที่มี Growth Mindset คือข้อใด?", options: ["พิสูจน์ให้คนอื่นเห็นว่าตนเองฉลาด", "พัฒนาตนเองให้เชี่ยวชาญขึ้น (Mastery)", "เอาชนะเพื่อนร่วมชั้นให้ได้", "หลีกเลี่ยงการถูกมองว่าโง่"], answer: "พัฒนาตนเองให้เชี่ยวชาญขึ้น (Mastery)", explanation: "Growth Mindset ไม่ได้แข่งกับใคร แต่ตั้งเป้าที่จะเรียนรู้ พัฒนาตนเองให้มีความเชี่ยวชาญ (Mastery) เพิ่มขึ้นในทุก ๆ วัน" },
-                    { q: "ข้อใดคือ \"ความเข้าใจผิด\" เกี่ยวกับ Growth Mindset (False Growth Mindset)?", options: ["การกล้าขอความช่วยเหลือเมื่อไม่เข้าใจ", "การปรับเปลี่ยนวิธีการเรียนเมื่อวิธีเดิมไม่ได้ผล", "การคิดบวกแบบเลื่อนลอยโดยไม่ลงมือทำหรือปรับวิธีการ", "ความพยายามที่มาพร้อมกลยุทธ์ที่ถูกต้อง"], answer: "การคิดบวกแบบเลื่อนลอยโดยไม่ลงมือทำหรือปรับวิธีการ", explanation: "การคิดบวกว่า 'เดี๋ยวก็ดี' แต่ไม่ลงมือทำหรือเปลี่ยนกลยุทธ์ ถือเป็นความเข้าใจผิดที่เรียกว่า False Growth Mindset" },
-                    { q: "เมื่อเจอ \"ความท้าทาย\" (Challenges) คนที่มี Growth Mindset จะทำอย่างไร?", options: ["โทษปัจจัยภายนอกที่ควบคุมไม่ได้", "ยอมแพ้ทันทีเมื่อเจออุปสรรค", "หลีกเลี่ยงเพราะกลัวเสียหน้า", "อ้าแขนรับเพราะมองว่าเป็นโอกาสเติบโต"], answer: "อ้าแขนรับเพราะมองว่าเป็นโอกาสเติบโต", explanation: "คนที่มี Growth Mindset จะมองความท้าทายเป็นโอกาสที่ดีในการฝึกฝนทักษะและพัฒนาศักยภาพของตนเอง" },
-                    { q: "การเปรียบเทียบ \"สมองเหมือนกล้ามเนื้อ\" สื่อถึงอะไร?", options: ["ความสบายและการพักผ่อนทำให้สมองพัฒนา", "เมื่อเจอโจทย์ยาก เซลล์ประสาทจะถูกกระตุ้นให้สร้างเครือข่ายใหม่", "สมองเป็นสิ่งตายตัวเปลี่ยนแปลงไม่ได้", "การทำสิ่งง่ายๆ ซ้ำๆ ช่วยให้สมองเติบโตมากที่สุด"], answer: "เมื่อเจอโจทย์ยาก เซลล์ประสาทจะถูกกระตุ้นให้สร้างเครือข่ายใหม่", explanation: "เมื่อเราทำโจทย์ที่ยากหรือท้าทาย สมองจะถูกกระตุ้นให้สร้างเครือข่ายใยประสาทใหม่ๆ เหมือนกล้ามเนื้อที่ถูกใช้งาน" },
-                    { q: "ข้อใดอธิบาย \"Mindset\" ได้ถูกต้องที่สุด?", options: ["สิ่งที่กำหนดวิธีที่เราตีความเหตุการณ์ อารมณ์ และพฤติกรรม", "ความรู้สึกที่เปลี่ยนไปตามสถานการณ์เท่านั้น", "ยีนที่ถ่ายทอดจากพ่อแม่สู่ลูก", "คะแนนสอบที่สะท้อนความสามารถที่แท้จริง"], answer: "สิ่งที่กำหนดวิธีที่เราตีความเหตุการณ์ อารมณ์ และพฤติกรรม", explanation: "Mindset ทำหน้าที่เป็นตัวกรองในการตีความสิ่งต่างๆ ที่เกิดขึ้น ซึ่งส่งผลต่อความรู้สึกและการกระทำของเรา" },
-                    { q: "ข้อความใด \"ไม่ใช่\" Growth Mindset ที่ถูกต้อง?", options: ["การชมแค่ \"พยายามดีแล้ว\" ทั้งที่ผลลัพธ์ไม่ดีขึ้นและไม่เปลี่ยนกลยุทธ์", "การปรับกลยุทธ์ใหม่เมื่อวิธีเดิมไม่ได้ผล", "ความพยายามที่มาพร้อมกลยุทธ์ที่ถูกต้อง", "การมองความล้มเหลวเป็นข้อมูลเพื่อพัฒนา"], answer: "การชมแค่ \"พยายามดีแล้ว\" ทั้งที่ผลลัพธ์ไม่ดีขึ้นและไม่เปลี่ยนกลยุทธ์", explanation: "การพยายามอย่างเดียวโดยไม่เปลี่ยนวิธีเมื่อล้มเหลว ไม่ใช่ Growth Mindset ที่แท้จริง เพราะไม่ได้ก่อให้เกิดการเรียนรู้ใหม่" },
-                    { q: "วิธีทลายกับดัก \"การเปรียบเทียบกับคนอื่น\" (Social Comparison) ที่ถูกต้องคือข้อใด?", options: ["แข่งกับตัวเองในอดีต เน้นพัฒนาการของตนเอง (Process Focus)", "แข่งกับคนอื่นให้ชนะทุกครั้ง", "สนใจเฉพาะเกรดเฉลี่ยเปรียบเทียบกับเพื่อน", "เลิกทำสิ่งที่ยากเพื่อเลี่ยงการเปรียบเทียบ"], answer: "แข่งกับตัวเองในอดีต เน้นพัฒนาการของตนเอง (Process Focus)", explanation: "การเปรียบเทียบที่สร้างสรรค์คือการเทียบกับตัวเองในอดีต (Process Focus) เพื่อดูพัฒนาการ ไม่ใช่เทียบเพื่อกดดันตัวเองกับผู้อื่น" },
-                    { q: "คำชมแบบใดจัดเป็น \"Person / Trait Praise\" ที่อาจทำลาย Mindset?", options: ["\"ชื่นชมความพยายามในการอ่านหนังสือของเธอ\"", "\"ชอบเทคนิคการสรุปความของเธอมาก\"", "\"เธอฉลาดจังเลย!\"", "\"เห็นถึงความทุ่มเทซ้อมอย่างหนักเลยนะ\""], answer: "\"เธอฉลาดจังเลย!\"", explanation: "การชมที่ลักษณะบุคคล (เช่น เก่ง, ฉลาด) ทำให้เด็กยึดติดกับภาพลักษณ์ และเมื่อล้มเหลวจะรู้สึกว่าตนเองสูญเสียความฉลาดนั้นไป" },
-                    { q: "ข้อใดเป็นลักษณะของคนที่มี Fixed Mindset?", options: ["มองความพยายามเป็นเส้นทางสู่ความชำนาญ", "เชื่อว่าสติปัญญาพัฒนาและเติบโตได้", "เชื่อว่าความฉลาดถูกกำหนดมาแต่เกิดและแก้ไขไม่ได้", "มองคำวิจารณ์เป็นบทเรียนเพื่อปรับปรุง"], answer: "เชื่อว่าความฉลาดถูกกำหนดมาแต่เกิดและแก้ไขไม่ได้", explanation: "ลักษณะสำคัญของ Fixed Mindset คือความเชื่อที่ว่าระดับสติปัญญาและความสามารถเป็นสิ่งที่ถูกกำหนดมาตายตัวตั้งแต่เกิด ไม่สามารถเปลี่ยนแปลงหรือพัฒนาได้" },
-                    { q: "คนที่มี Growth Mindset มองความผิดพลาด (Failure) อย่างไร?", options: ["เป็นการพิสูจน์ว่าตนเองไร้ความสามารถ", "เป็นข้อมูลป้อนกลับ (Feedback) เพื่อปรับปรุงกลยุทธ์", "เป็นเรื่องที่ต้องหลีกเลี่ยงทุกวิถีทาง", "เป็นตัวตนที่แท้จริงของเรา"], answer: "เป็นข้อมูลป้อนกลับ (Feedback) เพื่อปรับปรุงกลยุทธ์", explanation: "คนที่มี Growth Mindset จะมองความล้มเหลวหรือความผิดพลาดไม่ใช่เครื่องพิสูจน์ความโง่เขลา แต่เป็นข้อมูล (Feedback) ชั้นดีที่จะช่วยให้เรียนรู้และปรับปรุงกลยุทธ์ในครั้งต่อไปให้ดีขึ้น" }
-                ]
-            },
-            {
-                id: "cat_letgo",
-                title: "2. ศิลปะแห่งการปล่อยวาง",
-                questions: [
-                    { q: "ควรหลีกเลี่ยงการตระหนักถึงความตายเพราะการคิดถึงความตายทำให้ชีวิตขาดแรงจูงใจและทำให้คุณค่าในชีวิตลดลง", options: ["True", "False"], answer: "False", explanation: "การตระหนักถึงความตาย (Memento Mori) จะช่วยให้เราเห็นคุณค่าของเวลาและจัดลำดับความสำคัญในชีวิตได้ดีขึ้น ไม่ได้ทำให้หมดกำลังใจ" },
-                    { q: "วิธีการวัดความสำเร็จของ Dave Mustaine ด้วยการต้อง “ดังกว่า Metallica” แม้จะช่วยให้เขาประสบความสำเร็จในอาชีพนักดนตรี แต่ก็ทำให้เขาเกิดความทุกข์ใจ แสดงให้เห็นว่าหากต้องการเปลี่ยนมุมมองต่อปัญหาในชีวิต จำเป็นต้องเปลี่ยน “วิธีการวัดความสำเร็จ” ของตนเองด้วย", options: ["True", "False"], answer: "True", explanation: "Dave Mustaine ใช้วิธีวัดความสำเร็จโดยเทียบกับวงที่ดังที่สุด ทำให้เกิดความทุกข์ การเปลี่ยน Metric จะช่วยให้มองเห็นความสำเร็จในมุมใหม่" },
-                    { q: "การทำสิ่งที่ยาก เครียด และต้องใช้ความพยายามในระยะยาว ไม่ได้มีแนวโน้มสร้างความหมายและคุณค่าในชีวิตมากกว่าความสุขระยะสั้นจากความสบายหรือความบันเทิง", options: ["True", "False"], answer: "False", explanation: "งานวิจัยพบว่าการทำสิ่งที่ยากลำบากแต่มีความหมาย (เช่น เลี้ยงดูบุตร, วิ่งมาราธอน) สร้างคุณค่าและเติมเต็มชีวิตได้ลึกซึ้งกว่าความสุขฉาบฉวย" },
-                    { q: "ด้วยแก่นแท้แล้ว \"การพัฒนาตนเอง\" คือการจัดเรียงลำดับความสำคัญ", options: ["True", "False"], answer: "True", explanation: "เนื่องจากคนเรามีเวลาและพลังงานจำกัด การเลือกสนใจ (Give a f*ck) และจัดลำดับเฉพาะสิ่งที่สำคัญต่อเราจริงๆ จึงเป็นแก่นแท้ของการพัฒนาตนเอง" }
-                ]
-            },
-            {
-                id: "cat_pos_pre",
-                title: "3. Positive Thinking (Pre-test)",
-                questions: [
-                    { q: "\"Mindfulness\" ตามบทเรียนประกอบด้วยองค์ประกอบใด?", options: ["อดทน+ขยัน+ประหยัด", "วางแผน+ลงมือ+ประเมินผล", "คิดบวก+ยิ้มแย้ม+มองอนาคต", "รู้ตัว+อยู่กับปัจจุบัน+ไม่ตัดสิน"], answer: "รู้ตัว+อยู่กับปัจจุบัน+ไม่ตัดสิน", explanation: "สติ (Mindfulness) คือการรับรู้สิ่งที่เกิดขึ้นในปัจจุบันขณะ อย่างเท่าทันและไม่ด่วนตัดสิน (Non-judgmental)" },
-                    { q: "ข้อใดคือความหมายที่ถูกต้องของ \"การคิดเชิงบวก\"?", options: ["การบอกตัวเองว่าทุกอย่างดีหมด", "การหลีกเลี่ยงไม่คิดถึงเรื่องที่ทำให้เครียด", "การปฏิเสธไม่รับรู้ปัญหา", "การยอมรับความจริงตามที่เป็น แล้วมองหาทางออกและบทเรียน"], answer: "การยอมรับความจริงตามที่เป็น แล้วมองหาทางออกและบทเรียน", explanation: "การคิดเชิงบวกที่แท้จริง (Realistic Optimism) คือการมองเห็นและยอมรับปัญหาตามจริง แต่เลือกโฟกัสที่การหาทางออกและด้านที่ยังเป็นไปได้" },
-                    { q: "เทคนิค Gratitude Journal แนะนำให้ทำอย่างไร?", options: ["เขียน 3 สิ่งที่รู้สึกขอบคุณทุกวันก่อนนอน", "เขียนเรื่องที่ทำให้โกรธเพื่อระบายอารมณ์", "จดสิ่งที่ทำผิดพลาดในแต่ละวันเพื่อแก้ไข", "เขียนเป้าหมายชีวิต 10 ข้อทุกเช้า"], answer: "เขียน 3 สิ่งที่รู้สึกขอบคุณทุกวันก่อนนอน", explanation: "การจดบันทึกสิ่งดีๆ 3 สิ่งที่รู้สึกขอบคุณ (Gratitude Journal) เป็นการฝึกให้สมองมองเห็นแง่มุมบวกในชีวิตประจำวัน" },
-                    { q: "ข้อใดอธิบายความหมายของ \"Psychosomatic disorder\" ได้ถูกต้อง?", options: ["ภาวะที่รักษาให้หายได้ด้วยการผ่าตัดเท่านั้น", "โรคทางกายที่ตรวจไม่พบสาเหตุใดๆ", "โรคทางจิตที่ถ่ายทอดทางพันธุกรรม", "การเจ็บป่วยทางกายอันเนื่องมาจากสภาพจิตใจ"], answer: "การเจ็บป่วยทางกายอันเนื่องมาจากสภาพจิตใจ", explanation: "Psychosomatic disorder คือภาวะที่ความเครียดหรือปัญหาทางจิตใจ ส่งผลกระทบทำให้เกิดอาการเจ็บป่วยทางร่างกายขึ้นมาจริงๆ" },
-                    { q: "ตามเกณฑ์การวินิจฉัยโรคซึมเศร้า อาการต้องมีลักษณะอย่างไร?", options: ["มีอาการนานไม่เกิน 3 ชั่วโมงต่อวัน", "มีอาการปีละ 1 ครั้งในช่วงฤดูหนาว", "มีอาการเฉพาะตอนกลางคืนเท่านั้น", "มีอาการต่อเนื่องเกือบทุกวัน นานตั้งแต่ 2 สัปดาห์ขึ้นไป"], answer: "มีอาการต่อเนื่องเกือบทุกวัน นานตั้งแต่ 2 สัปดาห์ขึ้นไป", explanation: "ตามเกณฑ์ทางการแพทย์ ภาวะซึมเศร้า (MDD) จะต้องมีอาการเศร้า เบื่อหน่าย ต่อเนื่องเกือบตลอดเวลา นาน 2 สัปดาห์ขึ้นไป" },
-                    { q: "ข้อใดคือหลักการใช้ยาแก้เศร้าที่ถูกต้อง?", options: ["กินยาเพียง 2-3 วันก็เพียงพอ", "หยุดยาได้ทันทีเมื่อรู้สึกดีขึ้น", "ยาออกฤทธิ์ทันทีภายในไม่กี่ชั่วโมง", "ยาใช้เวลา 2-4 สัปดาห์กว่าจะเห็นผล และควรกินต่อ 6-12 เดือนหลังอาการดีขึ้น"], answer: "ยาใช้เวลา 2-4 สัปดาห์กว่าจะเห็นผล และควรกินต่อ 6-12 เดือนหลังอาการดีขึ้น", explanation: "ยาต้านเศร้าต้องใช้เวลาปรับสมดุลสารเคมีในสมอง 2-4 สัปดาห์จึงจะเห็นผลชัดเจน และต้องกินต่อเนื่องเพื่อป้องกันการเป็นซ้ำ" },
-                    { q: "ข้อใดคือประโยชน์ด้านสุขภาพกายของการคิดเชิงบวกตามบทเรียน?", options: ["ลดการทำงานของระบบภูมิคุ้มกัน", "เพิ่มระดับฮอร์โมน cortisol ในร่างกาย", "เพิ่มความเสี่ยงต่อโรคหัวใจ", "ลดระดับ cortisol และช่วยให้ความดันโลหิตต่ำลง"], answer: "ลดระดับ cortisol และช่วยให้ความดันโลหิตต่ำลง", explanation: "การคิดบวกช่วยลดความเครียด ทำให้ระดับฮอร์โมนคอร์ติซอลลดลง ส่งผลดีต่อระบบหลอดเลือดและทำให้ความดันโลหิตลดลง" },
-                    { q: "\"น้ำ\" นักศึกษาปี 1 ช่วงนี้เก็บตัว นอนทั้งวัน พูดลอยๆ ว่า \"อยู่ไปก็ไร้ค่า\" ข้อใดคือการตอบสนองที่เหมาะสมที่สุด?", options: ["เลี่ยงไม่เข้าไปยุ่งเพราะกลัวยิ่งไปกระตุ้นให้แย่ลง", "บอกน้ำว่า \"อย่าคิดมาก เดี๋ยวก็หาย\" แล้วรีบเปลี่ยนเรื่อง", "ตำหนิน้ำว่าอ่อนแอ ต้องเข้มแข็งกว่านี้", "รับฟังอย่างไม่ตัดสิน อยู่เป็นเพื่อน และช่วยให้น้ำได้เข้าพบผู้เชี่ยวชาญด้านสุขภาพจิต"], answer: "รับฟังอย่างไม่ตัดสิน อยู่เป็นเพื่อน และช่วยให้น้ำได้เข้าพบผู้เชี่ยวชาญด้านสุขภาพจิต", explanation: "คำพูดที่บ่งบอกว่าไม่อยากมีชีวิตอยู่ถือเป็นสัญญาณอันตราย (Red Flag) สิ่งที่ดีที่สุดคือการรับฟังอย่างเข้าใจและช่วยเหลือให้เข้าถึงผู้เชี่ยวชาญ" },
-                    { q: "การเปลี่ยนแปลงพฤติกรรมให้สำเร็จต้อง องค์ประกอบครบทั้ง 3 ส่วน คือข้อใด?", options: ["Head-Heart-Hand", "Head-Heart-Health", "Hand-Hope-Help", "Heart-Habit-Hobby"], answer: "Head-Heart-Hand", explanation: "การเปลี่ยนแปลงพฤติกรรมใดๆ ต้องอาศัยความรู้ความเข้าใจ (Head), แรงจูงใจและความปรารถนา (Heart), และทักษะวิธีการลงมือปฏิบัติ (Hand)" },
-                    { q: "\"ฟ้า\" เพิ่งรู้ผลสอบกลางภาคได้คะแนนน้อยมาก ข้อใดคือการใช้ \"การคิดเชิงบวก\" อย่างถูกต้อง?", options: ["\"ฉันมันโง่ ทำอะไรก็พลาดเสมอ\"", "\"ข้อสอบยากเกินไป เป็นความผิดอาจารย์\"", "\"ครั้งนี้ฉันทำได้ไม่ดี ฉันยอมรับ แล้วจะดูว่าพลาดตรงไหนเพื่อปรับปรุงครั้งหน้า\"", "\"ฉันจะไม่คิดเรื่องนี้อีกเลย แกล้งลืมไปว่าไม่เคยสอบ\""], answer: "\"ครั้งนี้ฉันทำได้ไม่ดี ฉันยอมรับ แล้วจะดูว่าพลาดตรงไหนเพื่อปรับปรุงครั้งหน้า\"", explanation: "การยอมรับความจริงที่เจ็บปวด (ได้คะแนนน้อย) แล้วแปลงเป็นบทเรียนเพื่อปรับปรุง เป็นลักษณะของการคิดเชิงบวกที่ผสานกับ Growth Mindset" },
-                    { q: "เทคนิค \"Get Rid of Negative Thinking\" คำในข้อใดเข้าข่ายคำที่มักปรากฏในความคิดลบ?", options: ["ขอบคุณ / ยินดี / โชคดี", "เสมอ / ไม่เคย / ทุกคน / ไม่มีใคร", "บางครั้ง / อาจจะ / ลองดู", "ค่อย ๆ / ทีละนิด / เท่าที่ทำได้"], answer: "เสมอ / ไม่เคย / ทุกคน / ไม่มีใคร", explanation: "คำว่า 'เสมอ', 'ไม่เคย', หรือ 'ไม่มีใคร' เป็นคำที่แสดงถึงการบิดเบือนทางความคิดแบบเหมารวม (Overgeneralization) ซึ่งเป็นลักษณะของความคิดลบ" }
-                ]
-            },
-            {
-                id: "cat_pos_post",
-                title: "4. Positive Thinking (Post-test)",
-                questions: [
-                    { q: "จากงานวิจัยที่กล่าวในบทเรียน ข้อใดกล่าวถูกต้องเกี่ยวกับความเสี่ยงภาวะซึมเศร้าและความเครียดในนักศึกษาปี 1?", options: ["พบภาวะซึมเศร้าราว 7% และความเครียดระดับรุนแรงกว่าครึ่ง โดยเพศหญิงเสี่ยงสูงกว่า", "ไม่พบนักศึกษาที่มีภาวะซึมเศร้าเลย", "นักศึกษาทุกคนมีภาวะซึมเศร้ารุนแรง", "เพศชายเสี่ยงสูงกว่าเพศหญิงอย่างชัดเจน"], answer: "พบภาวะซึมเศร้าราว 7% และความเครียดระดับรุนแรงกว่าครึ่ง โดยเพศหญิงเสี่ยงสูงกว่า", explanation: "งานวิจัยพบว่า นศ.ปี 1 ที่กำลังปรับตัว มักมีความเครียดสูงและเสี่ยงต่อภาวะซึมเศร้า โดยสถิติพบในเพศหญิงมากกว่าเพศชาย" },
-                    { q: "ประโยคใดจัดเป็น \"ความคิดลบ\" ตามลักษณะที่บทเรียนกล่าวถึง?", options: ["\"วันนี้ฉันทำข้อสอบได้บางข้อ\"", "\"มีบางเรื่องที่ฉันทำได้ดี\"", "\"ฉันทำอะไรก็พลาดเสมอ ไม่เคยทำอะไรสำเร็จเลย\"", "\"ฉันกำลังพยายามอยู่\""], answer: "\"ฉันทำอะไรก็พลาดเสมอ ไม่เคยทำอะไรสำเร็จเลย\"", explanation: "การใช้คำว่า 'เสมอ' เป็นการบิดเบือนความคิด (Cognitive Distortion) แบบเหมารวม ทำให้มองไม่เห็นความสำเร็จเล็กๆ น้อยๆ ในอดีต" },
-                    { q: "อาการในข้อใด \"ไม่ใช่\" อาการของโรคซึมเศร้าตามบทเรียน?", options: ["เบื่ออาหารหรือกินมากผิดปกติ", "นอนไม่หลับหรืออยากนอนทั้งวัน", "สมาธิไม่ดี หลงลืมง่าย", "มีพละกำลังเพิ่มขึ้น กระฉับกระเฉงกว่าปกติอย่างเห็นได้ชัด"], answer: "มีพละกำลังเพิ่มขึ้น กระฉับกระเฉงกว่าปกติอย่างเห็นได้ชัด", explanation: "อาการพละกำลังล้นเหลือ กระฉับกระเฉงเกินเหตุ เป็นลักษณะของภาวะเมเนีย (Mania) หรือไบโพลาร์ ไม่ใช่อาการของโรคซึมเศร้า" },
-                    { q: "งานวิจัยระบุว่าการฝึก Gratitude Journal ติดต่อกันนานเท่าใดจึงสามารถเปลี่ยนวิธีคิดได้?", options: ["7 วัน", "3 วัน", "21 วัน", "90 วัน"], answer: "21 วัน", explanation: "งานวิจัยพบว่าการทำพฤติกรรมใดๆ อย่างต่อเนื่องเป็นเวลา 21 วัน จะช่วยสร้างวงจรประสาทใหม่ (Neuroplasticity) จนกลายเป็นนิสัยได้" },
-                    { q: "วิธีการรักษาในข้อใดที่ \"ใช้คลื่นแม่เหล็กกระตุ้นสมอง ไม่ต้องดมยาสลบ และมีผลข้างเคียงน้อยกว่า ECT\"?", options: ["CBT", "IPT", "Body Scan", "TMS (Transcranial Magnetic Stimulation)"], answer: "TMS (Transcranial Magnetic Stimulation)", explanation: "TMS (Transcranial Magnetic Stimulation) เป็นนวัตกรรมใช้คลื่นแม่เหล็กกระตุ้นสมองโดยตรง มีผลข้างเคียงน้อย และไม่ต้องใช้ยาสลบเหมือนการทำ ECT" },
-                    { q: "ข้อความใดสะท้อน \"การคิดเชิงบวกที่แท้จริง\" ซึ่งไม่ใช่การหลอกตัวเอง?", options: ["ไม่มีอะไรผิดพลาดเลย ทุกอย่างสมบูรณ์แบบ", "ฉันจะไม่คิดถึงเรื่องสอบตกอีก ทำเป็นลืมไปเลย", "เรื่องแย่ ๆ ไม่มีจริง เป็นแค่จินตนาการ", "\"ครั้งนี้ฉันสอบตก ฉันยอมรับมัน แล้วจะหาว่าต้องปรับตรงไหนบ้าง\""], answer: "\"ครั้งนี้ฉันสอบตก ฉันยอมรับมัน แล้วจะหาว่าต้องปรับตรงไหนบ้าง\"", explanation: "การคิดเชิงบวกไม่ใช่การหลอกตัวเอง (Toxic Positivity) แต่คือการยอมรับความจริงที่เกิดขึ้น แล้วประเมินเพื่อหาทางแก้ไขให้ดีขึ้น" },
-                    { q: "\"ต้น\" มีอารมณ์เศร้า หดหู่ นอนไม่หลับ คิดลบต่อเนื่องมานานกว่า 3 สัปดาห์ จนกระทบการเรียน เข้าได้กับข้อใด และควรทำอย่างไร?", options: ["ต้องบังคับตัวเองให้มากขึ้น", "เป็นอาการทางกายให้ไปตรวจเลือด", "ปล่อยไว้เดี๋ยวก็หาย", "เข้าได้กับภาวะซึมเศร้า ควรแนะนำให้ปรึกษาผู้เชี่ยวชาญ/บริการสุขภาพจิต"], answer: "เข้าได้กับภาวะซึมเศร้า ควรแนะนำให้ปรึกษาผู้เชี่ยวชาญ/บริการสุขภาพจิต", explanation: "อาการหดหู่ นอนไม่หลับ และโทษตัวเองเกิน 2 สัปดาห์ กระทบการใช้ชีวิต ถือว่าเข้าเกณฑ์หลักของภาวะซึมเศร้า ควรพบผู้เชี่ยวชาญ" },
-                    { q: "ข้อใดคือประโยชน์ด้านสุขภาพจิตของการคิดเชิงบวก?", options: ["ทำให้ฟื้นตัวจากความเครียดได้ช้าลง", "ทำให้เก็บตัวและมีเพื่อนน้อยลง", "ทำให้ตั้งการ์ดมากขึ้นเวลาสื่อสาร", "ลดความเสี่ยงภาวะซึมเศร้า วิตกกังวล และเพิ่มความสามารถในการฟื้นตัว (Resilience)"], answer: "ลดความเสี่ยงภาวะซึมเศร้า วิตกกังวล และเพิ่มความสามารถในการฟื้นตัว (Resilience)", explanation: "การฝึกคิดเชิงบวกช่วยสร้างความยืดหยุ่นทางจิตใจ (Resilience) ทำให้เราสามารถฟื้นตัวจากความกดดันและความเศร้าได้รวดเร็วขึ้น" },
-                    { q: "นักศึกษาคนหนึ่ง \"รู้ว่าการคิดบวกดีและอยากทำ แต่ไม่รู้วิธีลงมือทำ\" ตามแนวคิด Head-Heart-Hand เขาขาดองค์ประกอบใด?", options: ["Hope (ความหวัง)", "Health (สุขภาพ)", "Heart (แรงจูงใจ)", "Hand (ทักษะ/วิธีลงมือทำ)"], answer: "Hand (ทักษะ/วิธีลงมือทำ)", explanation: "มีแรงจูงใจ (Heart) มีความรู้ (Head) แต่ไม่รู้วิธีการทำหรือขาดทักษะ เรียกว่าขาดองค์ประกอบด้าน Hand" }
-                ]
-            },
-            {
-                id: "cat_self",
-                title: "5. ตัวตน ชีวิต สังคม",
-                questions: [
-                    { q: "ข้อใดเป็นจริงเกี่ยวกับความหมายชีวิตแบบเหนือธรรมชาตินิยม?", options: ["ให้ความสำคัญกับเสรีภาพส่วนบุคคลเป็นอันดับแรก", "มีเป้าหมายเพื่อให้ดำเนินชีวิตอย่างมีศีลธรรม", "เกี่ยวกับชีวิตทางศาสนาเพราะว่าศาสนายอมรับความจริงที่อยู่พ้นไปจากโลกธรรมชาติ", "คือความคิดงมงายไร้เหตุผล"], answer: "เกี่ยวกับชีวิตทางศาสนาเพราะว่าศาสนายอมรับความจริงที่อยู่พ้นไปจากโลกธรรมชาติ", explanation: "แนวคิดเหนือธรรมชาตินิยม (Supernaturalism) เชื่อว่าเป้าหมายและความหมายของชีวิตมนุษย์ ถูกกำหนดโดยสิ่งเหนือธรรมชาติหรือพระเจ้า" },
-                    { q: "ข้อใดเป็นเท็จเกี่ยวกับเหนือธรรมชาตินิยม?", options: ["มนุษย์ควบคุมกฎเกณฑ์ธรรมชาติได้ทั้งหมด", "ชีวิตหลังความตายเป็นสิ่งที่เกินไปจากกฎธรรมชาติเพราะไม่มีคำอธิบายตายตัว", "ความหมายชีวิตถูกกำหนดด้วยความจริงสูงสุดตามคำสอน", "ศาสนาไม่ใช่การนับถือสิ่งศักดิ์สิทธิ์"], answer: "มนุษย์ควบคุมกฎเกณฑ์ธรรมชาติได้ทั้งหมด", explanation: "ตามหลักเหนือธรรมชาตินิยม มนุษย์ไม่สามารถควบคุมกฎธรรมชาติได้ทั้งหมด เพราะมีอำนาจศักดิ์สิทธิ์หรือพระเจ้าที่อยู่เหนือกฎเกณฑ์เหล่านั้น" },
-                    { q: "ข้อใดเกี่ยวกับปรัชญาเรื่องความหมายชีวิต?", options: ["ชีวิตคือการต่อสู้", "ชีวิตคือละครที่ทุกคนเป็นตัวเอก", "ความหมายที่แท้จริงชีวิตมนุษย์คือการกินอิ่มนอนหลับ", "ชีวิตที่มีความหมายคือการเข้าใจความมีอยู่ของตนเอง"], answer: "ชีวิตที่มีความหมายคือการเข้าใจความมีอยู่ของตนเอง", explanation: "ปรัชญาเกี่ยวกับความหมายชีวิต มุ่งเน้นไปที่การทำความเข้าใจความมีอยู่ของตนเอง (Existentialism) และการค้นหาคุณค่าในการดำรงชีวิต" },
-                    { q: "ข้อใดเป็นจริงเกี่ยวกับธรรมชาตินิยม?", options: ["ส่งเสริมให้ไม่เคารพกฏศีลธรรม", "สนใจเพียงชีวิตของตนเอง ไม่ต้องทำเพื่อคนอื่น", "ความหมายชีวิตเป็นสิ่งที่มนุษย์กำหนดด้วยตัวเอง", "การทำนายดวงชะตาช่วยให้รู้อนาคต"], answer: "ความหมายชีวิตเป็นสิ่งที่มนุษย์กำหนดด้วยตัวเอง", explanation: "ธรรมชาตินิยม (Naturalism) มีความเชื่อว่าไม่มีพระเจ้าหรือเป้าหมายที่ถูกกำหนดไว้ล่วงหน้า มนุษย์จึงต้องเป็นผู้สร้างความหมายของชีวิตด้วยตนเอง" }
-                ]
-            }
-        ];
-
-        // State Tracking
-        let totalQuestionsCount = 0;
-        const categoryState = {};
-
-        function initApp() {
-            const tabsContainer = document.getElementById('tabs-container');
-            const quizContainer = document.getElementById('quiz-container');
-            const dashboardBreakdown = document.getElementById('dashboard-breakdown');
-
-            quizData.forEach((category, index) => {
-                totalQuestionsCount += category.questions.length;
-                categoryState[category.id] = { score: 0, answeredCount: 0, total: category.questions.length, answered: [] };
-
-                // 1. Dashboard Breakdown Card
-                const dashCard = document.createElement('div');
-                dashCard.id = `dash-${category.id}`;
-                dashCard.className = 'bg-gray-50 border border-gray-200 rounded-lg p-3 text-center transition-colors';
-                dashCard.innerHTML = `
-                    <div class="text-xs font-semibold text-gray-500 mb-1 truncate px-1" title="${category.title}">${category.title}</div>
-                    <div class="text-xl font-bold text-gray-400" id="dash-score-${category.id}">- / ${category.questions.length}</div>
-                `;
-                dashboardBreakdown.appendChild(dashCard);
-
-                // 2. Tab Buttons
-                const tabBtn = document.createElement('button');
-                tabBtn.className = `tab-btn px-5 py-2.5 rounded-t-lg font-semibold text-sm border-t border-l border-r whitespace-nowrap outline-none ${index === 0 ? 'active' : 'bg-white text-gray-600 border-transparent hover:bg-gray-100 border-b border-gray-300'}`;
-                tabBtn.textContent = category.title;
-                if(index === 0) tabBtn.style.borderBottomColor = 'transparent';
-                tabBtn.onclick = () => switchTab(category.id, tabBtn);
-                tabsContainer.appendChild(tabBtn);
-
-                // 3. Quiz Section
-                const section = document.createElement('section');
-                section.id = `section-${category.id}`;
-                section.className = `category-section ${index === 0 ? 'block' : 'hidden'} animate-fade-in pb-10`;
-                
-                const form = document.createElement('form');
-                form.id = `form-${category.id}`;
-                form.onsubmit = (e) => e.preventDefault();
-
-                category.questions.forEach((qObj, qIndex) => {
-                    const card = document.createElement('div');
-                    card.className = 'bg-white rounded-xl shadow-sm border border-gray-200 p-5 mb-5 relative transition-all';
-                    card.id = `card-${category.id}-${qIndex}`;
-
-                    const qHeader = document.createElement('h3');
-                    qHeader.className = 'text-lg font-semibold text-gray-800 mb-4';
-                    qHeader.innerHTML = `<span class="text-blue-600 mr-1 font-bold">${qIndex + 1}.</span> ${qObj.q}`;
-                    card.appendChild(qHeader);
-
-                    const optionsDiv = document.createElement('div');
-                    optionsDiv.className = 'space-y-2';
-
-                    qObj.options.forEach((optText, optIndex) => {
-                        const optWrapper = document.createElement('div');
-                        optWrapper.className = 'relative flex items-center';
-                        
-                        const input = document.createElement('input');
-                        input.type = 'radio';
-                        input.name = `ans_${category.id}_${qIndex}`;
-                        input.id = `ans_${category.id}_${qIndex}_${optIndex}`;
-                        input.value = optText;
-                        input.className = 'peer absolute left-4 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 cursor-pointer z-10';
-                        input.onchange = () => checkAnswer(category.id, qIndex, optText, qObj);
-
-                        const label = document.createElement('label');
-                        label.htmlFor = input.id;
-                        label.className = 'option-label flex items-center justify-between w-full border border-gray-200 rounded-lg py-3 pl-12 pr-4 text-gray-700 bg-gray-50 peer-checked:bg-blue-50 peer-checked:border-blue-500 peer-checked:ring-1 peer-checked:ring-blue-500 transition-all cursor-pointer';
-                        label.id = `label_${category.id}_${qIndex}_${optIndex}`;
-                        
-                        const textSpan = document.createElement('span');
-                        textSpan.textContent = optText;
-                        textSpan.className = 'flex-1 pr-2';
-
-                        const badgeSpan = document.createElement('span');
-                        badgeSpan.id = `badge_${category.id}_${qIndex}_${optIndex}`;
-                        badgeSpan.className = 'hidden flex-shrink-0 font-bold px-3 py-1 rounded-full text-xs md:text-sm z-10';
-
-                        label.appendChild(textSpan);
-                        label.appendChild(badgeSpan);
-
-                        optWrapper.appendChild(input);
-                        optWrapper.appendChild(label);
-                        optionsDiv.appendChild(optWrapper);
-                    });
-
-                    // Feedback Message Container (Hidden initially)
-                    const feedbackDiv = document.createElement('div');
-                    feedbackDiv.id = `feedback-${category.id}-${qIndex}`;
-                    feedbackDiv.className = 'hidden mt-4 p-4 rounded-xl border text-sm md:text-base transition-all shadow-sm';
-
-                    card.appendChild(optionsDiv);
-                    card.appendChild(feedbackDiv);
-                    form.appendChild(card);
-                });
-
-                // Progress Area for this category
-                const submitArea = document.createElement('div');
-                submitArea.className = 'bg-white rounded-xl shadow-sm border border-gray-200 p-4 text-center mt-6 sticky bottom-4 z-10';
-                
-                const catScoreText = document.createElement('div');
-                catScoreText.id = `cat-score-${category.id}`;
-                catScoreText.className = 'text-lg font-bold text-blue-700';
-                catScoreText.innerHTML = `กำลังทำแบบทดสอบ... (0/${category.questions.length})`;
-
-                submitArea.appendChild(catScoreText);
-                form.appendChild(submitArea);
-
-                section.appendChild(form);
-                quizContainer.appendChild(section);
-            });
-
-            document.getElementById('global-score-text').textContent = `0 / ${totalQuestionsCount}`;
-        }
-
-        function switchTab(targetId, btnEl) {
-            document.querySelectorAll('.category-section').forEach(el => el.classList.add('hidden'));
-            
-            const tabs = document.querySelectorAll('.tab-btn');
-            tabs.forEach(el => {
-                el.classList.remove('active');
-                el.classList.add('bg-white', 'text-gray-600', 'hover:bg-gray-100', 'border-b', 'border-transparent', 'border-gray-300');
-                el.style.borderBottomColor = '';
-            });
-
-            document.getElementById(`section-${targetId}`).classList.remove('hidden');
-            
-            btnEl.classList.remove('bg-white', 'text-gray-600', 'hover:bg-gray-100', 'border-b', 'border-gray-300');
-            btnEl.classList.add('active');
-            btnEl.style.borderBottomColor = '#1e3a8a';
-            
-            btnEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }
-
-        function checkAnswer(catId, qIndex, selectedValue, qObj) {
-            if(categoryState[catId].answered[qIndex]) return; // Prevent double answer
-            categoryState[catId].answered[qIndex] = true;
-            categoryState[catId].answeredCount++;
-
-            const form = document.getElementById(`form-${catId}`);
-            const inputs = form.querySelectorAll(`input[name="ans_${catId}_${qIndex}"]`);
-            const feedbackDiv = document.getElementById(`feedback-${catId}-${qIndex}`);
-
-            let isCorrect = (selectedValue === qObj.answer);
-            if (isCorrect) categoryState[catId].score++;
-
-            inputs.forEach((input, optIndex) => {
-                input.disabled = true; // Lock all inputs for this question
-                const label = document.getElementById(`label_${catId}_${qIndex}_${optIndex}`);
-                const badge = document.getElementById(`badge_${catId}_${qIndex}_${optIndex}`);
-                label.classList.add('locked');
-
-                const isThisOptCorrect = (input.value === qObj.answer);
-
-                if (input.checked) {
-                    if (isThisOptCorrect) {
-                        label.classList.add('opt-correct');
-                        badge.textContent = '✓ ถูกต้อง';
-                        badge.classList.remove('hidden');
-                        badge.classList.add('bg-green-200', 'text-green-800');
-                    } else {
-                        label.classList.add('opt-wrong');
-                        badge.textContent = '✗ ผิด';
-                        badge.classList.remove('hidden');
-                        badge.classList.add('bg-red-200', 'text-red-800');
-                    }
-                } else if (isThisOptCorrect) {
-                    label.classList.add('opt-reveal');
-                    badge.textContent = '★ เฉลยข้อที่ถูก';
-                    badge.classList.remove('hidden');
-                    badge.classList.add('bg-green-200', 'text-green-800');
-                }
-            });
-
-            feedbackDiv.innerHTML = `
-                <div class="font-normal text-gray-800">
-                    <span class="font-bold text-blue-700">คำอธิบาย:</span> ${qObj.explanation}
-                </div>
-            `;
-            
-            if(isCorrect) {
-                feedbackDiv.classList.add('bg-green-50', 'border-green-300', 'block');
-            } else {
-                feedbackDiv.classList.add('bg-red-50', 'border-red-300', 'block');
-            }
-            feedbackDiv.classList.remove('hidden');
-
-            // Update UI Category Progress
-            const catScoreDiv = document.getElementById(`cat-score-${catId}`);
-            if (categoryState[catId].answeredCount === categoryState[catId].total) {
-                catScoreDiv.innerHTML = `ทำครบแล้ว! คะแนนหมวดนี้: ${categoryState[catId].score}/${categoryState[catId].total}`;
-            } else {
-                catScoreDiv.innerHTML = `ตอบแล้ว ${categoryState[catId].answeredCount}/${categoryState[catId].total} ข้อ (ถูก ${categoryState[catId].score} ข้อ)`;
-            }
-
-            updateGlobalDashboard();
-        }
-
-        function updateGlobalDashboard() {
-            let totalScore = 0;
-            
-            Object.keys(categoryState).forEach(catId => {
-                const state = categoryState[catId];
-                const dashCard = document.getElementById(`dash-${catId}`);
-                const dashScore = document.getElementById(`dash-score-${catId}`);
-                
-                totalScore += state.score;
-                
-                if(state.answeredCount > 0) {
-                    dashScore.textContent = `${state.score} / ${state.total}`;
-                    dashCard.classList.remove('bg-gray-50');
-                    
-                    if (state.answeredCount === state.total) {
-                        if (state.score === state.total) {
-                            dashCard.classList.add('bg-green-100', 'border-green-300');
-                            dashCard.classList.remove('bg-blue-50', 'border-blue-200');
-                            dashScore.classList.replace('text-gray-400', 'text-green-700');
-                            dashScore.classList.replace('text-blue-700', 'text-green-700');
-                        } else {
-                            dashCard.classList.add('bg-blue-50', 'border-blue-200');
-                            dashCard.classList.remove('bg-green-100', 'border-green-300');
-                            dashScore.classList.replace('text-gray-400', 'text-blue-700');
-                            dashScore.classList.replace('text-green-700', 'text-blue-700');
-                        }
-                    } else {
-                        dashCard.classList.add('bg-blue-50', 'border-blue-200');
-                        dashScore.classList.replace('text-gray-400', 'text-blue-700');
-                        dashScore.classList.replace('text-green-700', 'text-blue-700');
-                    }
-                } else {
-                    dashScore.textContent = `- / ${state.total}`;
-                    dashCard.className = 'bg-gray-50 border border-gray-200 rounded-lg p-3 text-center transition-colors';
-                    dashScore.className = 'text-xl font-bold text-gray-400';
-                }
-            });
-
-            document.getElementById('global-score-text').textContent = `${totalScore} / ${totalQuestionsCount}`;
-        }
-
-        function resetAllQuizzes() {
-            if(!confirm('คุณแน่ใจหรือไม่ว่าต้องการล้างข้อมูลคำตอบและคะแนนทั้งหมด?')) return;
-
-            Object.keys(categoryState).forEach(catId => {
-                categoryState[catId] = { score: 0, answeredCount: 0, total: categoryState[catId].total, answered: [] };
-                
-                const form = document.getElementById(`form-${catId}`);
-                
-                // Reset inputs and labels
-                form.querySelectorAll('input[type="radio"]').forEach(input => {
-                    input.checked = false;
-                    input.disabled = false;
-                });
-                
-                form.querySelectorAll('.option-label').forEach(label => {
-                    label.className = 'option-label flex items-center justify-between w-full border border-gray-200 rounded-lg py-3 pl-12 pr-4 text-gray-700 bg-gray-50 peer-checked:bg-blue-50 peer-checked:border-blue-500 peer-checked:ring-1 peer-checked:ring-blue-500 transition-all cursor-pointer';
-                });
-
-                form.querySelectorAll('[id^="badge_"]').forEach(badge => {
-                    badge.className = 'hidden flex-shrink-0 font-bold px-3 py-1 rounded-full text-xs md:text-sm z-10';
-                    badge.textContent = '';
-                });
-
-                // Reset cards and feedback
-                form.querySelectorAll('[id^="card-"]').forEach(card => card.classList.remove('border-red-400'));
-                form.querySelectorAll('[id^="feedback-"]').forEach(fb => {
-                    fb.className = 'hidden mt-4 p-4 rounded-xl border text-sm md:text-base transition-all shadow-sm';
-                    fb.classList.remove('bg-green-50', 'border-green-300', 'bg-red-50', 'border-red-300');
-                    fb.innerHTML = '';
-                });
-
-                // Reset Category Progress Area
-                document.getElementById(`cat-score-${catId}`).innerHTML = `กำลังทำแบบทดสอบ... (0/${categoryState[catId].total})`;
-            });
-
-            updateGlobalDashboard();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Boot
-        document.addEventListener('DOMContentLoaded', () => {
-            initApp();
-            
-            // Scroll to Top Listener
-            window.addEventListener('scroll', () => {
-                const btn = document.getElementById('scrollToTopBtn');
-                if (window.scrollY > 300) {
-                    btn.classList.remove('scale-0');
-                    btn.classList.add('scale-100');
-                } else {
-                    btn.classList.remove('scale-100');
-                    btn.classList.add('scale-0');
-                }
-            });
-        });
-    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
